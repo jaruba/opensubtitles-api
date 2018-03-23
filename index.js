@@ -3,7 +3,7 @@ const libhash = require('./lib/hash.js')
 const libsearch = require('./lib/search.js')
 const libupload = require('./lib/upload.js')
 const libid = require('./lib/identify.js')
-const lodash = require('lodash')
+const _ = require('lodash')
 
 module.exports = class OpenSubtitles {
 
