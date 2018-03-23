@@ -3,6 +3,7 @@ const libhash = require('./lib/hash.js')
 const libsearch = require('./lib/search.js')
 const libupload = require('./lib/upload.js')
 const libid = require('./lib/identify.js')
+const lodash = require('lodash')
 
 module.exports = class OpenSubtitles {
 
@@ -83,7 +84,14 @@ module.exports = class OpenSubtitles {
             .then(() => libsearch.optimizeQueryTerms(info))
             .then(optimizedQT => {
                 return Promise.all(optimizedQT.map(op => {
-                    return this.api.SearchSubtitles(this.credentials.status.token, [op]).then(result => subs = subs.concat(result.data))
+                    return this.api.SearchSubtitles(this.credentials.status.token, [op])
+                        .then(result => {
+                            if (result && result.data) {
+                                if (result.data instanceof Array === false) 
+                                    result.data = _.values(result.data)
+                                subs = subs.concat(result.data)
+                            }
+                        })
                 }))
             })
             .then(() => libsearch.optimizeSubs(subs, info))
