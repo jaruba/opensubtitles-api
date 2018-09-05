@@ -1,3 +1,4 @@
+'use strict';
 const OS = require('./lib/opensubtitles.js')
 const libhash = require('./lib/hash.js')
 const libsearch = require('./lib/search.js')
